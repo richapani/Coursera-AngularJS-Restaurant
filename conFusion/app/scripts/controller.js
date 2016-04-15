@@ -114,9 +114,23 @@ angular.module('confusionApp')
         }])
 
         .controller('IndexController', ['$scope','corporateFactory', 'menuFactory',function($scope, corporateFactory,menuFactory) {
-            var leader=corporateFactory.getLeader(3);
-            $scope.leader=leader;
+            //var leader=corporateFactory.getLeader(3);
+            $scope.showLeader=false; 
+                        
+            $scope.leader = corporateFactory.getLeaders().get({id:3})
+                        .$promise.then(
+                            function(response){
+                                $scope.leader = response;
+                                $scope.showLeader = true;
+                            },
+                            function(response) {
+                                $scope.message = "Error: "+response.status + " " + response.statusText;
+                            }
+                        );
+            //$scope.leader=leader;
             //$scope.promotion=menuFactory.getPromotion(0);
+            $scope.showPromotion=false; 
+                        
             $scope.promotion = menuFactory.getPromotion().get({id:0})
                         .$promise.then(
                             function(response){
@@ -145,8 +159,20 @@ angular.module('confusionApp')
            
         }])
 
-        .controller('AboutController', ['$scope','corporateFactory', function($scope, corporateFactory) {
-          $scope.leadership= corporateFactory.getLeaders();  
+        //.controller('AboutController', ['$scope','corporateFactory', function($scope, corporateFactory) {
+         .controller('AboutController', ['$scope', 'corporateFactory', function($scope, corporateFactory) {   
+            $scope.showProf = false;
+            $scope.message="Loading ...";
+            $scope.leadership = [];
+            
+             corporateFactory.getLeaders().query(
+                function(response) {
+                    $scope.leadership = response;
+                    $scope.showProf = true;
+                },
+                function(response) {
+                    $scope.message = "Error: "+response.status + " " + response.statusText;
+                });
             
         }])
         // implement the IndexController and About Controller here

@@ -57,7 +57,7 @@
 					
                     <li class="media" ng-repeat="leader in leadership">
                     <div class="media-left media-middle">
-                        
+                         <a ui-sref="app.aboutus({id: leader.id})">
                         <img class="media-object img-thumbnail"
                          ng-src={{leader.image}} alt="professor">
                         </a>
