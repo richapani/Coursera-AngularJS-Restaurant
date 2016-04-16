@@ -56,7 +56,7 @@ angular.module('confusionApp')
           
             
              feedfac.getFeedback = function(){
-                    return $resource(baseURL+"feedback/:id",null,{'update':{method:'PUT' }});
+                    return $resource(baseURL+"feedback/:id", {id:'@id'});
                    // return leadership;
                     
                 };
